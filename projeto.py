@@ -3,15 +3,11 @@
 # Projeto 2 - Tecnico Battle Simulator    #
 #                                         #
 ###########################################
-# TAD mapa - Funcao de alto nivel         #
-#            obter_movimento              #
-###########################################
 
 
 def cria_posicao(x, y):
     '''
     A funcao cria_posicao devolve uma posicao com as coordenadas dadas.
-
     cria_posicao: N x N -> posicao
     '''
     if not isinstance(x, int) or not isinstance(y, int) or x < 0 or y < 0:
@@ -22,7 +18,6 @@ def cria_posicao(x, y):
 def cria_copia_posicao(pos):
     '''
     Devolve uma copia da posicao pos
-
     posicao -> posicao
     '''
     return cria_posicao(obter_pos_x(pos), obter_pos_y(pos))
@@ -31,7 +26,6 @@ def cria_copia_posicao(pos):
 def obter_pos_x(pos):
     '''
     A funcao obter_pos_x devolve o valor da componente x de pos
-
     obter_pos_x: posicao -> N
     '''
     return pos['x']
@@ -40,7 +34,6 @@ def obter_pos_x(pos):
 def obter_pos_y(pos):
     '''
     A funcao obter_pos_y devolve o valor da componente y de pos
-
     obter_pos_y: posicao -> N
     '''
     return pos['y']
@@ -84,7 +77,7 @@ def obter_posicoes_adjacentes(pos):
 
 def cria_unidade(pos, v, f, e):
     '''
-    posicao x N x N x str -> unidade
+    cria_unidade: posicao x N x N x str -> unidade
     '''
     if not eh_posicao(pos) or not isinstance(v, int) or v <= 0 \
             or not isinstance(f, int) or f <= 0 or not isinstance(e, str) or len(e) == 0:
@@ -94,42 +87,42 @@ def cria_unidade(pos, v, f, e):
 
 def cria_copia_unidade(unit):
     '''
-    unidade -> unidade
+    cria_copia_unidade: unidade -> unidade
     '''
     return cria_unidade(obter_posicao(unit), obter_vida(unit), obter_forca(unit), obter_exercito(unit))
 
 
 def obter_posicao(unit):
     '''
-    unidade -> posicao
+    obter_posicao: unidade -> posicao
     '''
     return unit['pos']
 
 
 def obter_exercito(unit):
     '''
-    unidade -> str
+    obter_exercito: unidade -> str
     '''
     return unit['exercito']
 
 
 def obter_forca(unit):
     '''
-    unidade -> N
+    obter_forca: unidade -> N
     '''
     return unit['forca']
 
 
 def obter_vida(unit):
     '''
-    unidade -> N
+    obter_vida: unidade -> N
     '''
     return unit['vida']
 
 
 def muda_posicao(unit, pos):
     '''
-    unidade x posicao -> unidade
+    muda_posicao: unidade x posicao -> unidade
     '''
     unit['pos'] = pos
     return unit
@@ -137,7 +130,7 @@ def muda_posicao(unit, pos):
 
 def remove_vida(unit, v):
     '''
-    unidade x N -> unidade
+    remove_vida: unidade x N -> unidade
     '''
     unit['vida'] -= v
     return unit
@@ -145,7 +138,7 @@ def remove_vida(unit, v):
 
 def eh_unidade(arg):
     '''
-    universal -> booleano
+    eh_unidade: universal -> booleano
     '''
     return isinstance(arg, dict) and len(arg) == 4 \
         and 'pos' in arg and eh_posicao(obter_posicao(arg)) \
@@ -156,14 +149,14 @@ def eh_unidade(arg):
 
 def unidades_iguais(unit1, unit2):
     '''
-    unidade x unidade -> booleano
+    unidades_iguais: unidade x unidade -> booleano
     '''
     return unit1 == unit2
 
 
 def unidade_para_char(unit):
     '''
-    unidade -> str
+    unidade_para_char: unidade -> str
     '''
     return obter_exercito(unit)[0].upper()
 
@@ -172,11 +165,14 @@ def unidade_para_str(unit):
     '''
     unidade_para_str: unidade -> str
     '''
-    return '{}:[{}, {}]@{}'.format(unidade_para_char(unit), obter_vida(unit),
-                                   obter_forca(unit), posicao_para_str(obter_posicao(unit)))
+    return '{}[{}, {}]@{}'.format(unidade_para_char(unit), obter_vida(unit),
+                                  obter_forca(unit), posicao_para_str(obter_posicao(unit)))
 
 
 def unidade_ataca(unit1, unit2):
+    '''
+    unidade_ataca: unidade x unidade -> booleano
+    '''
     forca = obter_forca(unit1)
     remove_vida(unit2, forca)
     return obter_vida(unit2) <= 0
@@ -187,6 +183,31 @@ def ordenar_unidades(tuplo):
         pos = obter_posicao(unit)
         return obter_pos_y(pos), obter_pos_x(pos)
     return sorted(tuplo, key=sort_key)
+
+
+def tuplo_unidades(arg):
+    '''
+    Devolve True, se o arg for um tuplo que contem unidades
+    tuplo_unidades: universal -> booleano
+    '''
+    if not isinstance(arg, tuple):
+        return False
+    for unit in arg:
+        if not eh_unidade(unit):
+            return False
+    return True
+
+
+def cria_mapa(d, w, e1, e2):
+    if not isinstance(d, tuple) or not isinstance(w, tuple) \
+            or not tuplo_unidades(e1) or not tuplo_unidades(e2) \
+            or d[0] < 3 or d[1] < 3 or len(d) != 2:
+        raise ValueError('cria_mapa: argumentos invalidos')
+
+    for pos in w:
+        if not eh_posicao(pos):
+            raise ValueError('cria_mapa: argumentos invalidos')
+    return {}
 
 
 def obter_movimento(mapa, unit):
