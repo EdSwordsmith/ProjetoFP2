@@ -182,6 +182,13 @@ def unidade_ataca(unit1, unit2):
     return obter_vida(unit2) <= 0
 
 
+def ordenar_unidades(tuplo):
+    def sort_key(unit):
+        pos = obter_posicao(unit)
+        return obter_pos_y(pos), obter_pos_x(pos)
+    return sorted(tuplo, key=sort_key)
+
+
 def obter_movimento(mapa, unit):
     '''
     A funcao obter_movimento devolve a posicao seguinte da unidade argumento
