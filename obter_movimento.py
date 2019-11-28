@@ -10,35 +10,176 @@
 
 def cria_posicao(x, y):
     '''
-    A funcao cria_posicao devolve uma posicao com as coordenadas dadas
+    A funcao cria_posicao devolve uma posicao com as coordenadas dadas.
 
-    natural x natural -> posicao
+    cria_posicao: N x N -> posicao
     '''
     if not isinstance(x, int) or not isinstance(y, int) or x < 0 or y < 0:
         raise ValueError('cria_posicao: argumentos invalidos')
-    return {"comp_x": x, "comp_y": y}
+    return {'x': x, 'y': y}
+
+
+def cria_copia_posicao(pos):
+    '''
+    Devolve uma copia da posicao pos
+
+    posicao -> posicao
+    '''
+    return cria_posicao(obter_pos_x(pos), obter_pos_y(pos))
 
 
 def obter_pos_x(pos):
-    return pos["comp_x"]
+    '''
+    A funcao obter_pos_x devolve o valor da componente x de pos
+
+    obter_pos_x: posicao -> N
+    '''
+    return pos['x']
 
 
 def obter_pos_y(pos):
-    return pos["comp_y"]
+    '''
+    A funcao obter_pos_y devolve o valor da componente y de pos
+
+    obter_pos_y: posicao -> N
+    '''
+    return pos['y']
+
+
+def eh_posicao(arg):
+    '''
+    eh_posicao: universal -> booleano
+    '''
+    return isinstance(arg, dict) and 'x' in arg and 'y' in arg \
+        and isinstance(obter_pos_x(arg), int) and obter_pos_x(arg) >= 0 \
+        and isinstance(obter_pos_y(arg), int) and obter_pos_y(arg) >= 0
 
 
 def posicoes_iguais(p1, p2):
+    '''
+    posicoes_iguais: posicao x posicao -> booleano
+    '''
     return p1 == p2
 
 
 def posicao_para_str(pos):
-    return "(" + obter_pos_x(pos) + ", " + obter_pos_y(pos) + ")"
+    '''
+    posicao_para_str: posicao -> str
+    '''
+    return '(' + str(obter_pos_x(pos)) + ', ' + str(obter_pos_y(pos)) + ')'
 
 
-def eh_posicao(arg):
-    return isinstance(arg, dict) and "comp_x" in arg and "comp_y" in arg \
-        and isinstance(obter_pos_x(arg), int) and obter_pos_x(arg) >= 0 \
-        and isinstance(obter_pos_y(arg), int) and obter_pos_y(arg) >= 0
+def obter_posicoes_adjacentes(pos):
+    '''
+    obter_posicoes_adjacentes: posicao -> tuplo de posicoes
+    '''
+    x, y = obter_pos_x(pos), obter_pos_y(pos)
+    res = ()
+    if y > 0:
+        res += (cria_posicao(x, y - 1),)
+    if x > 0:
+        res += (cria_posicao(x - 1, y),)
+    return res + (cria_posicao(x + 1, y), cria_posicao(x, y + 1))
+
+
+def cria_unidade(pos, v, f, e):
+    '''
+    posicao x N x N x str -> unidade
+    '''
+    if not eh_posicao(pos) or not isinstance(v, int) or v <= 0 \
+            or not isinstance(f, int) or f <= 0 or not isinstance(e, str) or len(e) == 0:
+        raise ValueError('cria_unidade: argumentos invalidos')
+    return {'pos': pos, 'vida': v, 'forca': f, 'exercito': e}
+
+
+def cria_copia_unidade(unit):
+    '''
+    unidade -> unidade
+    '''
+    return cria_unidade(obter_posicao(unit), obter_vida(unit), obter_forca(unit), obter_exercito(unit))
+
+
+def obter_posicao(unit):
+    '''
+    unidade -> posicao
+    '''
+    return unit['pos']
+
+
+def obter_exercito(unit):
+    '''
+    unidade -> str
+    '''
+    return unit['exercito']
+
+
+def obter_forca(unit):
+    '''
+    unidade -> N
+    '''
+    return unit['forca']
+
+
+def obter_vida(unit):
+    '''
+    unidade -> N
+    '''
+    return unit['vida']
+
+
+def muda_posicao(unit, pos):
+    '''
+    unidade x posicao -> unidade
+    '''
+    unit['pos'] = pos
+    return unit
+
+
+def remove_vida(unit, v):
+    '''
+    unidade x N -> unidade
+    '''
+    unit['vida'] -= v
+    return unit
+
+
+def eh_unidade(arg):
+    '''
+    universal -> booleano
+    '''
+    return isinstance(arg, dict) and len(arg) == 4 \
+        and 'pos' in arg and eh_posicao(obter_posicao(arg)) \
+        and 'vida' in arg and isinstance(obter_vida(arg), int) and obter_vida(arg) > 0 \
+        and 'forca' in arg and isinstance(obter_forca(arg), int) and obter_forca(arg) > 0 \
+        and 'exercito' in arg and isinstance(obter_exercito(arg), str) and len(obter_exercito(arg)) != 0
+
+
+def unidades_iguais(unit1, unit2):
+    '''
+    unidade x unidade -> booleano
+    '''
+    return unit1 == unit2
+
+
+def unidade_para_char(unit):
+    '''
+    unidade -> str
+    '''
+    return obter_exercito(unit)[0].upper()
+
+
+def unidade_para_str(unit):
+    '''
+    unidade_para_str: unidade -> str
+    '''
+    return '{}:[{}, {}]@{}'.format(unidade_para_char(unit), obter_vida(unit),
+                                   obter_forca(unit), posicao_para_str(obter_posicao(unit)))
+
+
+def unidade_ataca(unit1, unit2):
+    forca = obter_forca(unit1)
+    remove_vida(unit2, forca)
+    return obter_vida(unit2) <= 0
 
 
 def obter_movimento(mapa, unit):
