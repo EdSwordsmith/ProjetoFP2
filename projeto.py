@@ -30,7 +30,7 @@ def cria_copia_posicao(pos):
 def obter_pos_x(pos):
     '''
     A funcao obter_pos_x devolve o valor da
-    componente x da posicao pos.
+    componente x da posicao dada.
 
     obter_pos_x: posicao -> N
     '''
@@ -40,7 +40,7 @@ def obter_pos_x(pos):
 def obter_pos_y(pos):
     '''
     A funcao obter_pos_y devolve o valor da
-    componente y da posicao pos.
+    componente y da posicao dada.
 
     obter_pos_y: posicao -> N
     '''
@@ -61,8 +61,8 @@ def eh_posicao(arg):
 
 def posicoes_iguais(p1, p2):
     '''
-    A funcao posicoes_iguais devolve True apenas se p1 e p2
-    forem posicoes iguais.
+    A funcao posicoes_iguais devolve True apenas se ambas
+    as posicoes dadas forem iguais.
 
     posicoes_iguais: posicao x posicao -> booleano
     '''
@@ -72,7 +72,8 @@ def posicoes_iguais(p1, p2):
 def posicao_para_str(pos):
     '''
     A funcao posicao_para_str devolve a cadeia de caracteres '(x, y)' que
-    representa o seu argumento, sendo os valores x e y as coordenadas de pos.
+    representa o seu argumento, sendo os valores x e y as coordenadas da
+    posicao dada.
     
     posicao_para_str: posicao -> str
     '''
@@ -81,8 +82,8 @@ def posicao_para_str(pos):
 
 def obter_posicoes_adjacentes(pos):
     '''
-    A funcao obter_posicoes_adjacentes(p) devolve um tuplo com as
-    posicoes adjacentes a posicao pos de acordo com a ordem
+    A funcao obter_posicoes_adjacentes devolve um tuplo com as
+    posicoes adjacentes a posicao dada de acordo com a ordem
     de leitura de um labirinto.
 
     obter_posicoes_adjacentes: posicao -> tuplo de posicoes
@@ -98,7 +99,7 @@ def obter_posicoes_adjacentes(pos):
 
 def cria_unidade(pos, v, f, e):
     '''
-    A funcao cria unidade(p, v, f, str) recebe uma posicao p,
+    A funcao cria unidade recebe uma posicao,
     dois valores inteiros maiores que 0 correspondentes a vida e
     forca da unidade, e uma cadeia de caracteres nao vazia
     correspondente ao exercito da unidade e devolve a unidade correspondente.
@@ -113,6 +114,9 @@ def cria_unidade(pos, v, f, e):
 
 def cria_copia_unidade(unit):
     '''
+    A funcao cria_copia_unidade recebe uma unidade
+    unit e devolve uma nova copia da unidade.
+
     cria_copia_unidade: unidade -> unidade
     '''
     return cria_unidade(obter_posicao(unit), obter_vida(unit), obter_forca(unit), obter_exercito(unit))
@@ -120,6 +124,8 @@ def cria_copia_unidade(unit):
 
 def obter_posicao(unit):
     '''
+    A funcao obter_posicao devolve a posicao da unidade dada.
+
     obter_posicao: unidade -> posicao
     '''
     return unit['pos']
@@ -127,6 +133,9 @@ def obter_posicao(unit):
 
 def obter_exercito(unit):
     '''
+    A funcao obter_exercito devolve a cadeia
+    de caracteres correspondente ao exercito da unidade dada.
+
     obter_exercito: unidade -> str
     '''
     return unit['exercito']
@@ -134,6 +143,9 @@ def obter_exercito(unit):
 
 def obter_forca(unit):
     '''
+    A funcao obter_forca devolve o valor que
+    corresponde a forca de ataque da unidade dada.
+
     obter_forca: unidade -> N
     '''
     return unit['forca']
@@ -141,6 +153,9 @@ def obter_forca(unit):
 
 def obter_vida(unit):
     '''
+    A funcao obter_vida devolve o valor que
+    corresponde a vida da unidade dada.
+
     obter_vida: unidade -> N
     '''
     return unit['vida']
@@ -148,6 +163,9 @@ def obter_vida(unit):
 
 def muda_posicao(unit, pos):
     '''
+    A funcao muda_posicao muda destrutivamente a unidade dada
+    alterando a posicao para ser igual a posicao dada.
+
     muda_posicao: unidade x posicao -> unidade
     '''
     unit['pos'] = pos
@@ -156,6 +174,9 @@ def muda_posicao(unit, pos):
 
 def remove_vida(unit, v):
     '''
+    A funcao remove_vida muda destrutivamente a unidade dada
+    alterando os pontos de vida subtraindo o valor dado.
+
     remove_vida: unidade x N -> unidade
     '''
     unit['vida'] -= v
@@ -164,6 +185,9 @@ def remove_vida(unit, v):
 
 def eh_unidade(arg):
     '''
+    A funcao eh_unidade devolve True caso o seu argumento
+    seja um TAD unidade e False caso contrario.
+
     eh_unidade: universal -> booleano
     '''
     return isinstance(arg, dict) and len(arg) == 4 \
@@ -175,6 +199,9 @@ def eh_unidade(arg):
 
 def unidades_iguais(unit1, unit2):
     '''
+    A funcao unidades_iguais devolve True apenas se ambas
+    as unidades dadas forem iguais.
+
     unidades_iguais: unidade x unidade -> booleano
     '''
     return unit1 == unit2
@@ -182,6 +209,10 @@ def unidades_iguais(unit1, unit2):
 
 def unidade_para_char(unit):
     '''
+    A funcao unidade_para_char devolve a cadeia de
+    caracteres dum unico elemento, correspondente
+    ao primeiro caracter em maiuscula do exercito da unidade dada.
+
     unidade_para_char: unidade -> str
     '''
     return obter_exercito(unit)[0].upper()
@@ -189,6 +220,9 @@ def unidade_para_char(unit):
 
 def unidade_para_str(unit):
     '''
+    A funcao unidade_para_char devolve a cadeia de caracteres, correspondente
+    ao primeiro caracter em maiuscula do exercito da unidade dada.
+
     unidade_para_str: unidade -> str
     '''
     return '{}[{}, {}]@{}'.format(unidade_para_char(unit), obter_vida(unit),
@@ -197,6 +231,10 @@ def unidade_para_str(unit):
 
 def unidade_ataca(unit1, unit2):
     '''
+    A funcao unidade_ataca modifica destrutivamente a segunda unidade
+    retirando o valor de pontos de vida correspondente a forca de
+    ataque da primeira unidade.
+
     unidade_ataca: unidade x unidade -> booleano
     '''
     forca = obter_forca(unit1)
@@ -204,29 +242,47 @@ def unidade_ataca(unit1, unit2):
     return obter_vida(unit2) <= 0
 
 
-def sort_key(unit):
-    pos = obter_posicao(unit)
-    return obter_pos_y(pos), obter_pos_x(pos)
-
-
-def ordenar_unidades(tuplo):
-    return tuple(sorted(tuplo, key=sort_key))
-
-
-def tuplo_unidades(arg):
+def ordenar_unidades(conj_units):
     '''
-    Devolve True, se o arg for um tuplo que contem unidades
-    tuplo_unidades: universal -> booleano
+    A funcao ordenar_unidades devolve um tuplo contendo as
+    mesmas unidades do tuplo fornecido, ordenadas de acordo
+    com a ordem de leitura do labirinto.
+
+    ordenar_unidades: tuplo unidades -> tuplo unidades
     '''
-    if not isinstance(arg, tuple) or len(arg) == 0:
-        return False
-    for unit in arg:
-        if not eh_unidade(unit):
-            return False
-    return True
+
+    def sort_key(unit):
+        pos = obter_posicao(unit)
+        return obter_pos_y(pos), obter_pos_x(pos)
+
+    return tuple(sorted(conj_units, key=sort_key))
 
 
 def cria_mapa(d, w, e1, e2):
+    '''
+    A funcao cria_mapa recebe um tuplo de 2 valores inteiros correspondentes
+    as dimensoes do mapa, um tuplo de 0 ou mais posicoes correspondentes
+    as posicoes das paredes que nao se encontram nos limites exteriores do
+    labirinto e dois tuplos que contem uma ou mais unidades correspondentes
+    aos dois exercitos e devolve o mapa.
+
+    cria_mapa: int x tuplo posicoes x tuplo unidades x tuplo unidades -> mapa
+    '''
+
+    def tuplo_unidades(arg):
+        '''
+        A funcao tuplo_unidades devolve True, se o argumento fornecido
+        for um tuplo que contem apenas unidades.
+
+        tuplo_unidades: universal -> booleano
+        '''
+        if not isinstance(arg, tuple) or len(arg) == 0:
+            return False
+        for unit in arg:
+            if not eh_unidade(unit):
+                return False
+        return True
+
     if not isinstance(d, tuple) or not isinstance(w, tuple) \
             or not tuplo_unidades(e1) or not tuplo_unidades(e2) \
             or d[0] < 3 or d[1] < 3 or len(d) != 2:
@@ -234,7 +290,7 @@ def cria_mapa(d, w, e1, e2):
 
     for pos in w:
         if not eh_posicao(pos) or obter_pos_x(pos) <= 0 or obter_pos_y(pos) <= 0 \
-                    or obter_pos_x(pos) >= d[0] - 1 or obter_pos_y(pos) >= d[1] - 1:
+                or obter_pos_x(pos) >= d[0] - 1 or obter_pos_y(pos) >= d[1] - 1:
             raise ValueError('cria_mapa: argumentos invalidos')
 
     e1_nome = obter_exercito(e1[0])
@@ -243,6 +299,12 @@ def cria_mapa(d, w, e1, e2):
 
 
 def cria_copia_mapa(mapa):
+    '''
+    A funcao cria_copia_mapa recebe um mapa e devolve uma copia
+    nova do mapa.
+
+    cria_copia_mapa: mapa -> mapa
+    '''
     nomes = obter_nome_exercitos(mapa)
     e1 = tuple(cria_copia_unidade(u) for u in obter_unidades_exercito(mapa, nomes[0]))
     e2 = tuple(cria_copia_unidade(u) for u in obter_unidades_exercito(mapa, nomes[1]))
@@ -250,18 +312,44 @@ def cria_copia_mapa(mapa):
 
 
 def obter_tamanho(mapa):
+    '''
+    A funcao obter_tamanho recebe um mapa e devolve um tuplo correspondente
+    a dimensao do mapa.
+
+    obter_tamanho: mapa -> tuplo inteiros
+    '''
     return mapa['tamanho']
 
 
 def obter_nome_exercitos(mapa):
+    '''
+    A funcao obter_nome_exercitos recebe um mapa e devolve um tuplo ordenado com
+    duas cadeias de caracteres correspondem aos nomes dos exercitos.
+
+    obter_nome_exercitos: mapa -> tuplo str
+    '''
     return tuple(sorted(mapa['exercitos'].keys()))
 
 
 def obter_unidades_exercito(mapa, exercito):
+    '''
+    A funcao obter_unidades_exercito recebe um mapa e uma cadeia de caracteres
+    correspondente a um exercito e devolve um tuplo ordenado de acordo com a
+    ordem de leitura do labirinto que contem as unidades pertencentes a esse exercito.
+
+    obter_unidades_exercito: mapa x str -> tuplo unidades
+    '''
     return ordenar_unidades(mapa['exercitos'][exercito])
 
 
 def obter_todas_unidades(mapa):
+    '''
+    A funcao obter_todas_unidades recebe um mapa e devolve um
+    tuplo ordenado de todas as unidades do mapa, ordenadas de acordo com
+    a ordem de leitura do labirinto.
+
+    obter_todas_unidades: mapa -> tuplo unidades
+    '''
     unidades = ()
     for exercito in obter_nome_exercitos(mapa):
         unidades += obter_unidades_exercito(mapa, exercito)
@@ -269,6 +357,12 @@ def obter_todas_unidades(mapa):
 
 
 def obter_unidade(mapa, posicao):
+    '''
+    A funcao obter_unidade recebe um mapa e uma posicao e devolve a unidade
+    do mapa que se encontra nessa posicao.
+
+    obter_unidade: mapa x posicao -> unidade
+    '''
     for unidade in obter_todas_unidades(mapa):
         if posicoes_iguais(obter_posicao(unidade), posicao):
             return unidade
@@ -276,47 +370,86 @@ def obter_unidade(mapa, posicao):
 
 
 def eh_posicao_unidade(mapa, posicao):
+    '''
+    A funcao eh_posicao_unidade devolve True se ha uma unidade na
+    posicao que e dada.
+
+    eh_posicao_unidade: mapa x posicao -> booleano
+    '''
     return obter_unidade(mapa, posicao) is not None
 
 
 def eh_posicao_corredor(mapa, posicao):
+    '''
+    A funcao eh_posicao_corredor devolve True se na posicao dada nao
+    existe nenhuma parede.
+
+    eh_posicao_corredor: mapa x posicao -> booleano
+    '''
     return not eh_posicao_parede(mapa, posicao)
 
 
 def eh_posicao_parede(mapa, posicao):
+    '''
+    A funcao eh_posicao_parede devolve True se na posicao dada existir uma parede.
+
+    eh_posicao_parede: mapa x posicao -> booleano
+    '''
     tamanho = obter_tamanho(mapa)
+    # Verificar se a posicao se encontra num limite exterior do labirinto
     if obter_pos_x(posicao) == 0 or obter_pos_y(posicao) == 0 \
             or obter_pos_x(posicao) == tamanho[0] - 1 or obter_pos_y(posicao) == tamanho[1] - 1:
         return True
-
-    for parede in mapa['paredes']:
-        if posicoes_iguais(posicao, parede):
-            return True
-    return False
+    # Caso nao seja de um limite exterior, verificar se e uma parede interior
+    return posicao in mapa['paredes']
 
 
-def eliminar_unidade(mapa, unidade):
-    exercito = obter_exercito(unidade)
+def eliminar_unidade(mapa, unit):
+    '''
+    A funcao eliminar_unidade modifica destrutivamente o mapa, eliminando a
+    unidade dada, deixando a posicao que essa ocupava livre e devolve o proprio mapa.
+
+    eliminar_unidade: mapa x unidade -> mapa
+    '''
+    exercito = obter_exercito(unit)
     unidades = obter_unidades_exercito(mapa, exercito)
     for i in range(len(unidades)):
-        if unidades_iguais(unidade, unidades[i]):
+        if unidades_iguais(unit, unidades[i]):
             mapa['exercitos'][exercito] = unidades[:i] + unidades[i + 1:]
             break
     return mapa
 
 
-def mover_unidade(mapa, unidade, posicao):
-    muda_posicao(unidade, posicao)
+def mover_unidade(mapa, unit, posicao):
+    '''
+    A funcao mover_unidade modifica destrutivamente o mapa e a
+    unidade fornecidos, mudando a posicao onde a unidade se encontra e
+    devolve o proprio mapa.
+
+    mover_unidade: mapa x unidade -> mapa
+    '''
+    muda_posicao(unit, posicao)
     return mapa
 
 
 def mapas_iguais(mapa1, mapa2):
+    '''
+    A funcao mapas_iguais devolve True se os dois mapas forem iguais.
+
+    mapas_iguais: mapa x mapa -> booleano
+    '''
     return obter_todas_unidades(mapa1) == obter_todas_unidades(mapa2) and \
            obter_tamanho(mapa1) == obter_tamanho(mapa2) and \
-           mapa1["paredes"] == mapa2["paredes"]
+           mapa1['paredes'] == mapa2['paredes']
 
 
 def mapa_para_str(mapa):
+    '''
+    A funcao mapa_para_str devolve uma cadeia de caracteres que representa o mapa como
+    descrito no primeiro projeto, neste caso, com as unidades representadas pela sua representacao externa.
+
+    mapa_para_str: mapa -> str
+    '''
     tamanho = obter_tamanho(mapa)
     res = ''
     for y in range(tamanho[1]):
@@ -334,6 +467,12 @@ def mapa_para_str(mapa):
 
 
 def obter_inimigos_adjacentes(mapa, unit):
+    '''
+    A funcao obter_inimigos_adjacentes devolve um tuplo contendo as unidades inimigas
+    adjacentes a unidade dada de acordo com a ordem de leitura do labirinto.
+
+    obter_inimigos_adjacentes: mapa x unidade -> tuplo unidades
+    '''
     exercito = obter_exercito(unit)
     res = ()
     for pos in obter_posicoes_adjacentes(obter_posicao(unit)):
@@ -432,6 +571,13 @@ def obter_movimento(mapa, unit):
 
 
 def calcula_pontos(mapa, exercito):
+    '''
+    A funcao calcula_pontos recebe um mapa e uma cadeia de caracteres correspondente ao nome
+    de um dos exercitos do mapa e devolve a sua pontuacao. A pontuacao dum exercito
+    e o total dos pontos de vida de todas as unidades do exercito.
+
+    calcula_pontos: mapa x str -> int
+    '''
     pontos = 0
     for unit in obter_unidades_exercito(mapa, exercito):
         pontos += obter_vida(unit)
@@ -439,6 +585,14 @@ def calcula_pontos(mapa, exercito):
 
 
 def simula_turno(mapa):
+    '''
+    A funcao simula_turno modifica destrutivamente o mapa fornecido como argumento de acordo
+    com a simulacao de um turno de batalha completo, e devolve o proprio mapa. Isto e,
+    seguindo a ordem de leitura do labirinto, cada unidade viva realiza um
+    unico movimento e pode realizar um ataque se possivel de acordo com as regras descritas.
+
+    simula_turno: mapa -> mapa
+    '''
     for unit in obter_todas_unidades(mapa):
         if obter_vida(unit) > 0:
             pos = obter_movimento(mapa, unit)
@@ -450,14 +604,23 @@ def simula_turno(mapa):
 
 
 def simula_batalha(config, verboso):
-    def print_info():
-        print(mapa_para_str(m1))
-        exercitos = obter_nome_exercitos(m1)
-        pontuacao = '[ {}:{} {}:{} ]'.format(exercitos[0], calcula_pontos(m1, exercitos[0]),
-                                             exercitos[1], calcula_pontos(m1, exercitos[1]))
+    '''
+    A funcao simula_batalha simula uma batalha completa. A batalha termina quando
+    um dos exercitos vence ou se nao ocorrer nenhuma alteracao ao mapa ou as
+    unidades apos um turno. Recebe uma cadeia de caracteres e um valor booleano
+    e devolve o nome do exercito ganhador. A cadeia de caracteres passada por
+    argumento corresponde ao ficheiro de configuracao do simulador e o booleano
+    corresponde a se o simulador se encontra no modo verboso.
+
+    simula_batalha: str x booleano -> str
+    '''
+    def print_info(mapa):
+        print(mapa_para_str(mapa))
+        e1, e2 = obter_nome_exercitos(mapa)
+        pontuacao = '[ {}:{} {}:{} ]'.format(e1, calcula_pontos(mapa, e1), e2, calcula_pontos(mapa, e2))
         print(pontuacao)
 
-    def empate(mapa, e1, e2):
+    def empate(mapa):
         copia = cria_copia_mapa(mapa)
         copia = simula_turno(copia)
         return mapas_iguais(mapa, copia)
@@ -465,7 +628,7 @@ def simula_batalha(config, verboso):
     def acabou(mapa, e1, e2):
         if calcula_pontos(mapa, e1) == 0 or calcula_pontos(mapa, e2) == 0:
             return True
-        return empate(mapa, e1, e2)
+        return empate(mapa)
 
     file = open(config, 'r')
     tamanho = eval(file.readline())
@@ -481,12 +644,12 @@ def simula_batalha(config, verboso):
                for p in pos_e1)
     e2 = tuple(cria_unidade(cria_posicao(p[0], p[1]), config_e2[1], config_e2[2], config_e2[0])
                for p in pos_e2)
-    m1 = cria_mapa(tamanho, paredes, e1, e2)
+    mapa = cria_mapa(tamanho, paredes, e1, e2)
 
     print_info()
 
-    while not acabou(m1, config_e1[0], config_e2[0]):
-        m1 = simula_turno(m1)
+    while not acabou(mapa, config_e1[0], config_e2[0]):
+        mapa = simula_turno(mapa)
         if verboso:
             print_info()
     if not verboso:
@@ -494,4 +657,4 @@ def simula_batalha(config, verboso):
 
     if not calcula_pontos(m1, config_e1[0]) == 0 and not calcula_pontos(m1, config_e2[0]) == 0:
         return 'EMPATE'
-    return next(filter(lambda x: calcula_pontos(m1, x) != 0, list(obter_nome_exercitos(m1))))
+    return next(filter(lambda x: calcula_pontos(mapa, x) != 0, list(obter_nome_exercitos(mapa))))

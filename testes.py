@@ -53,9 +53,9 @@ class TestesProjeto(unittest.TestCase):
         u3 = obter_unidade(m1, cria_posicao(3, 2))
         temp = tuple(unidade_para_str(u) for u in obter_inimigos_adjacentes(m1, u3))
         self.assertEqual(temp, ('C[10, 2]@(3, 1)', 'C[10, 2]@(3, 3)'))
-        self.assertEqual(obter_movimento(m1, u3), (3, 2))
+        self.assertEqual(posicao_para_str(obter_movimento(m1, u3)), '(3, 2)')
         u4 = obter_unidade(m1, cria_posicao(1, 3))
-        self.assertEqual(obter_movimento(m1, u4), (1, 2))
+        self.assertEqual(posicao_para_str(obter_movimento(m1, u4)), '(1, 2)')
 
 
 if __name__ == '__main__':

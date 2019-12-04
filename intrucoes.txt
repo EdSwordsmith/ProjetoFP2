@@ -1,0 +1,23 @@
+1) colocar o conteudo do zip na mesma pasta que o ficheiro do projeto.
+
+2) Renomear o ficheiro do projeto para "projeto.py"
+
+3) Executar o ficheiro test_projeto.py
+
+   Se algum dos meus testes der merda, vai aparecer na consola. However, desemerdem-se a ler os testes que foram feitos que até dia 5 eu tou passando tempo com a familia (I'm sorry).
+   Pro tip: começem pelas operaçoes mais simples, as operaçoes mais complexas vao dar erro se as mais simples também dao erro.
+   Another pro tip: verifiquem se as funçoes para_str, _iguais do TAD posicao, unidade e mapa estao corretas, se estas nao estiverem corretas, os testes todos vao dar errado.
+   
+   Sempre que um teste der erros, olhem para o erro e procurem as linhas e vejam os exemplo usados/onde deu problema.
+
+   O ficheiro nao contem todos os testes do mooshak.
+   Passar todos os testes nao significa que vais ter 1200 no mooshak.
+   Teres 1200 no mooshak e passar todos os testes nao significa que fizeste a abstraçao dos tipos de dados bem.
+   O ficheiro contem alguns testes meus, alguns dos exemplos do enunciado, e alguns do mooshak.
+
+
+
+Problemas frequentes:
+1) Na funçao simula_turno, têm de parar de mover unidades se algum dos exercitos for derrotado.
+
+2) obter_unidades_exercito tem de devolver um tuplo vazio quando nao há unidade do exercito fornecido. É preciso ter em atençao para nao fazer cenas do tipo obter_exercito(mapa["e1"][0]) quando nao há unidades em mapa["e1"]. Vai dar KeyError porque tao a tentar aceder ao primeiro elemento de um tuplo que nao tem elementos.
